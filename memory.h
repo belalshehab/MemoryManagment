@@ -65,6 +65,7 @@ public:
      * 1. sort the process segmentTable in descending order according to the segment limit
      * 2. run addSegment on each segment
      * 3. if any segment faild to be inserted, stop and remove all the inserted segments
+     * 4. add the process to the m_processTable
      * @param process the process to be allocated in memory
      * @param allocationMethod the AllocationMethod to be used for selecting which hole
      * @return true if all segments has ben inserted successfully, false otherwise
@@ -76,6 +77,7 @@ public:
      * @brief removeProcess:
      * 1. remove all sgements of the process
      * 2. call mergeHoles
+     * 3. remove the process from m_processTable
      * @param process the process to be removed
      * @return true on success, and false if the process can't be founded
      */
@@ -102,7 +104,7 @@ public:
 private:
     uint32_t m_size;
     QList<Segment> m_segments;
-    QList<Process> m_processes;
+    QList<Process> m_processTable;
 };
 
 #endif // MEMORY_H
