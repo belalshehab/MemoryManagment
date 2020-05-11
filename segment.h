@@ -9,8 +9,7 @@
 struct Segment
 {
 
-    Segment(uint32_t sid, uint32_t limit, uint32_t base, bool isHole, const QString &name = "");
-    Segment(uint32_t sid, uint32_t limit, const QString &name = "");
+    Segment(uint32_t sid, uint32_t limit, uint32_t base = 0, bool isHole = false, const QString &name = "");
 
     bool operator==(const Segment &otherSegment);
 
@@ -18,7 +17,9 @@ struct Segment
     uint32_t m_limit;
     uint32_t m_base;
     bool m_isHole;
+
     QString m_name;
+
     uint32_t m_pid;
 };
 

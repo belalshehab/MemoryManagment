@@ -1,16 +1,38 @@
-#include "proccess.h"
+#include "process.h"
+#include <list>
+#include <algorithm>
 
-Proccess::Proccess(long long pid, const QString &name):
+Process::Process(long long pid, const QString &name):
     m_pid(pid), m_name(name)
 {   
 }
 
-void Proccess::addSegment(const Segment &newSegment)
+void Process::addSegment(const Segment &segment)
 {
-    m_segmentTable.append(newSegment);
+    m_segmentTable.append(segment);
 }
 
-bool Proccess::removeSegment(long long sid)
+bool Process::removeSegment(const Segment &segment)
 {
-    m_segmentTable.removeOne()
+    return  m_segmentTable.removeOne(segment);
+}
+
+void Process::sortTheSegmentTableOnLimit()
+{
+    std::sort(m_segmentTable.begin(), m_segmentTable.end(), [](const Segment &segment1, const Segment &segment2){
+        return segment1.m_limit < segment2.m_limit;
+    });
+}
+
+void Process::sortTheSegmentTableOnBase()
+{
+    std::sort(m_segmentTable.begin(), m_segmentTable.end(), [](const Segment &segment1, const Segment &segment2){
+        return segment1.m_base < segment2.m_base;
+    });
+}
+
+
+QList<Segment> Process::segmentTable() const
+{
+    return m_segmentTable;
 }

@@ -5,20 +5,32 @@
 
 #include <QString>
 #include <QList>
+#include <QColor>
 
 #include <iostream>
 
-class Proccess
+class Process
 {
 public:
-    Proccess(long long m_pid, const QString &m_name = "");
 
-    void addSegment(const Segment &newSegment);
-    bool removeSegment(long long sid);
+    Process(long long pid, const QString &name = "");
+
+
+    void addSegment(const Segment &segment);
+    bool removeSegment(const Segment &segment);
+
+    void sortTheSegmentTableOnLimit();
+
+    void sortTheSegmentTableOnBase();
+
+    QList<Segment> segmentTable() const;
+
+
 private:
     long long m_pid;
     QString m_name;
     QList<Segment> m_segmentTable;
+    QColor m_color;
 };
 
 #endif // PROCCESS_H
