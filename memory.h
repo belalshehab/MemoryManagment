@@ -48,8 +48,7 @@ public:
      * @param segment the segment to be removed
      * @return return true if the segment can be found, and false otherwise
      */
-    bool removeSegment(const Segment &segment);
-
+    bool removeSegment(Segment &segment);
 
     /**
      * @brief iterate on the segments table and merge any consecutive holes by:
