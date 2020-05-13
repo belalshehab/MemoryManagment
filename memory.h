@@ -5,7 +5,6 @@
 #include "process.h"
 
 #include <QList>
-
 #include <iostream>
 
 class Memory
@@ -18,7 +17,7 @@ public:
     Memory(uint32_t size);
 
 
-    //Esraa
+    //Aya
     /**
      * @brief addSegment:
      * 1. search with findHole
@@ -36,19 +35,19 @@ public:
      * @param allocationMethod the AllocationMethod to be used for selecting which hole
      * @return the index of the suitable hole, or -1 if there is no big enough hole
      */
-    int findHole(uint32_t size, AllocationMethod allocationMethode);
+    int findHole(uint32_t size, AllocationMethod allocationMethod);
 
 
-    //Aya
+    //Esraa
     /**
      * @brief removeSegment:
      * 1. search for the segment to be removed
      * 2. make the segment to be hole
-     * 3. merge any neighbor holes
      * @param segment the segment to be removed
      * @return return true if the segment can be found, and false otherwise
      */
-    bool removeSegment(Segment &segment);
+   // bool removeSegment(Segment &segment);
+    bool removeSegment(const Segment &segment);
 
     /**
      * @brief iterate on the segments table and merge any consecutive holes by:

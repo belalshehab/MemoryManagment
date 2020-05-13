@@ -41,7 +41,7 @@ Segment Memory::addSegment(const Segment &segment, Memory::AllocationMethod allo
 
 int Memory::findHole(uint32_t size, Memory::AllocationMethod allocationMethod)
 {
-    uint32_t min = m_segments.size();
+    uint32_t min = uint32_t(m_segments.size());
     int min_index = -1 ;
 
     switch (allocationMethod) {
@@ -76,17 +76,28 @@ int Memory::findHole(uint32_t size, Memory::AllocationMethod allocationMethod)
 }
 
 
-bool Memory::removeSegment(Segment &segment)
-{
+//bool Memory::removeSegment(Segment &segment)
+//{
+//    if ( !segment.m_isHole )
+//    {
+//        segment.m_isHole = true ;
+//        return true ;
+//    }
+//    else {
+//        return false;
+//    }
+//}
 
-    if ( !segment.m_isHole )
-    {
-        segment.m_isHole = true ;
-        return true ;
+bool Memory::removeSegment(const Segment &segment){
+
+    for (int i = 0; i<= m_segments.size();i++){
+        if (m_segments[i] == segment && !segment.m_isHole )
+        {
+            m_segments[i].m_isHole = true ;
+            return true ;
+        }
     }
-    else {
-        return false;
-    }
+    return false ;
 }
 
 
