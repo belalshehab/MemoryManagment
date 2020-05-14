@@ -175,7 +175,7 @@ bool Memory::addProcess(Process process, Memory::AllocationMethod allocationMeth
 bool Memory::removeProcess(const Process &process)
 {
     //replace this with your implementation
-    return false;
+    return true;
 }
 
 bool Memory::addHole(const Segment &hole)
