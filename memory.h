@@ -19,23 +19,23 @@ public:
 
     //Aya
     /**
-     * @brief addSegment:
+     * @brief addProcessSegment:
      * 1. search with findHole
      * 2. insert the segment starting from the hole address
      * 3. resize the subsequent hole to be with limit = oldHoleLimit - insertedSegnmentLimit
      * @param segment the segment to be inserted
      * @param allocationMethod the AllocationMethod to be used for selecting which hole
-     * @return return segment with valid base (base >= 0) on success, or invalid base (base < 0) if there is no big enough hole
+     * @return return true on success, or false if there is no big enough hole
      */
-    Segment addSegment(const Segment &segment, AllocationMethod allocationMethod);
+    std::pair<bool, Segment> addProcessSegment(const Segment &segment, AllocationMethod allocationMethod);
 
     /**
      * @brief findHole return the index of the suitable hole
-     * @param limit the size of the segment to be allocated
+     * @param limitOfSegment the size of the segment to be allocated
      * @param allocationMethod the AllocationMethod to be used for selecting which hole
      * @return the index of the suitable hole, or -1 if there is no big enough hole
      */
-    int findHole(uint32_t size, AllocationMethod allocationMethod);
+    int findHole(uint32_t limitOfSegment, AllocationMethod allocationMethod);
 
 
     //Esraa
@@ -43,10 +43,10 @@ public:
      * @brief removeSegment:
      * 1. search for the segment to be removed
      * 2. make the segment to be hole
+     * 3. call mergeHoles()
      * @param segment the segment to be removed
      * @return return true if the segment can be found, and false otherwise
      */
-   // bool removeSegment(Segment &segment);
     bool removeSegment(const Segment &segment);
 
     /**
@@ -69,7 +69,7 @@ public:
      * @return true if all segments has ben inserted successfully, false otherwise
      *
      */
-    bool addProcess(const Process &process, AllocationMethod allocationMethode);
+    bool addProcess(Process process, AllocationMethod allocationMethode);
 
     /**
      * @brief removeProcess:
@@ -100,7 +100,8 @@ public:
      */
     void memoryShuffle();
 private:
-    uint32_t m_size;
+    //memory size in bytes
+    uint32_t m_memorySize;
     QList<Segment> m_segments;
     QList<Process> m_processTable;
 };

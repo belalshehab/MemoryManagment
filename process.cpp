@@ -36,3 +36,13 @@ QList<Segment> Process::segmentTable() const
 {
     return m_segmentTable;
 }
+
+int Process::sizeOfSegmentTable() const
+{
+    return m_segmentTable.count();
+}
+
+void Process::setSegmentTable(const QList<Segment> &segmentTable)
+{
+    m_segmentTable = segmentTable;
+}
