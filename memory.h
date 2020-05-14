@@ -4,19 +4,29 @@
 #include "segment.h"
 #include "process.h"
 
+#include <QAbstractListModel>
+#include <QVariant>
 #include <QList>
 
 #include <iostream>
 
-class Memory
+class Memory: public QAbstractListModel
 {
+    Q_OBJECT
+
 public:
+    Q_ENUMS(AllocationMethod)
+//public:
     enum AllocationMethod{
       FIRST_FIT = 1, BEST_FIT, WORST_FIT
     };
-public:
-    Memory(uint32_t size);
 
+public:
+    explicit Memory(QObject *parent = nullptr);
+
+
+    uint32_t size() const;
+    Q_INVOKABLE void resize(const uint32_t &size);
 
     //Esraa
     /**
@@ -101,6 +111,16 @@ public:
      * @brief memoryShuffle place all free locations togther into one large hole
      */
     void memoryShuffle();
+
+
+//    // GUI basic functionality:
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+protected:
+    virtual QHash<int, QByteArray> roleNames() const override;
+
 private:
     uint32_t m_size;
     QList<Segment> m_segments;

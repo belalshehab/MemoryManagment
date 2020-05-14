@@ -2,5 +2,13 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
+        <file>DeepLine.qml</file>
+        <file>GrayRectangle.qml</file>
+        <file>MemoryView.qml</file>
+        <file>AllocationButton.qml</file>
+        <file>AllocationMethods.qml</file>
+        <file>ProcessSegments.qml</file>
+        <file>SegmentDelegate.qml</file>
+        <file>MemorySegmentDelegate.qml</file>
     </qresource>
 </RCC>
