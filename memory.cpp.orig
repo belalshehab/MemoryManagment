@@ -1,8 +1,14 @@
 #include "memory.h"
 
-Memory::Memory(QObject *parent): QAbstractListModel(parent), m_memorySize(0)
+<<<<<<< HEAD
+Memory::Memory(QObject *parent): QAbstractListModel(parent), m_size(0)
+{
+=======
+
+Memory::Memory(uint32_t size): m_memorySize(size)
 {
     //    m_segments.push_back(Segment(1, m_memorySize, 0, false));
+>>>>>>> memory_functions
 
     m_segments.push_back(Segment(0, 0, 1400, 0, true));
     m_segments.push_back(Segment(1, 1, 1000, 1401, false));
@@ -15,6 +21,10 @@ Memory::Memory(QObject *parent): QAbstractListModel(parent), m_memorySize(0)
 
 std::pair<bool, Segment> Memory::addProcessSegment(const Segment &segment, Memory::AllocationMethod allocationMethod)
 {
+<<<<<<< HEAD
+    //replace this with your implementation
+    return Segment(0, 0, 0);
+=======
     int index_new_seg = findHole(segment.m_limit , allocationMethod);
     if ( index_new_seg  == -1)
     {
@@ -40,7 +50,9 @@ std::pair<bool, Segment> Memory::addProcessSegment(const Segment &segment, Memor
 
         return {true, m_segments[index_new_seg]};
     }
+>>>>>>> memory_functions
 }
+
 
 int Memory::findHole(uint32_t limitOfSegment, Memory::AllocationMethod allocationMethod)
 {
@@ -79,6 +91,7 @@ int Memory::findHole(uint32_t limitOfSegment, Memory::AllocationMethod allocatio
     }
     return min_index;
 }
+
 
 bool Memory::removeSegment(const Segment &segment){
 
@@ -120,6 +133,7 @@ void Memory::mergeHoles()
     }
 }
 
+
 bool Memory::addProcess(Process process, Memory::AllocationMethod allocationMethode)
 {
     bool success = true;
@@ -160,6 +174,7 @@ bool Memory::addProcess(Process process, Memory::AllocationMethod allocationMeth
     return success;
 }
 
+
 void Memory::removeProcess(Process process)
 {
     QList<Segment> &segmentTable = process.segmentTable();
@@ -171,6 +186,7 @@ void Memory::removeProcess(Process process)
 
     mergeHoles();
 }
+
 
 bool Memory::addHole(const Segment &hole)
 {
@@ -199,29 +215,28 @@ QHash<int, QByteArray> Memory::roleNames() const
     return QHash<int, QByteArray>();
 }
 
-uint32_t Memory::memorySize() const
+
+uint32_t Memory::size() const
 {
-    return m_memorySize;
+    return m_size;
 }
 
-
-void Memory::resizeMemory(const uint32_t &newMemorySize)
+void Memory::resize(const uint32_t &size)
 {
-    m_memorySize = newMemorySize;
     if(m_segments.isEmpty())
     {
-        m_segments.push_back(Segment(0, newMemorySize, 0, true));
+        m_segments.push_back(Segment(0, size, 0, true));
     }
     else
     {
         if(m_segments.last().m_isHole)
         {
-            m_segments.last().m_limit += m_memorySize - newMemorySize;
+            m_segments.last().m_limit += m_size - size;
         }
         else
         {
-            uint32_t base = m_segments.last().m_base + m_segments.last().m_limit;
-            m_segments.push_back(Segment(0, m_memorySize - newMemorySize, base, true));
+            uint32_t base = m_segments.last().m_base + m_segments.last().m_limit +1;
+            m_segments.push_back(Segment(0, m_size - size, base, true));
         }
     }
 }

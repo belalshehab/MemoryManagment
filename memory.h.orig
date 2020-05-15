@@ -7,7 +7,6 @@
 #include <QAbstractListModel>
 #include <QVariant>
 #include <QList>
-
 #include <iostream>
 
 class Memory: public QAbstractListModel
@@ -16,15 +15,23 @@ class Memory: public QAbstractListModel
 
 public:
     Q_ENUMS(AllocationMethod)
-    //public:
+//public:
     enum AllocationMethod{
-        FIRST_FIT = 1, BEST_FIT, WORST_FIT
+      FIRST_FIT = 1, BEST_FIT, WORST_FIT
     };
+
 public:
     explicit Memory(QObject *parent = nullptr);
 
 
+<<<<<<< HEAD
+    uint32_t size() const;
+    Q_INVOKABLE void resize(const uint32_t &size);
+
+    //Esraa
+=======
     //Aya
+>>>>>>> memory_functions
     /**
      * @brief addProcessSegment:
      * 1. search with findHole
@@ -50,12 +57,11 @@ public:
      * @brief removeSegment:
      * 1. search for the segment to be removed
      * 2. make the segment to be hole
-     * 3. merge any neighbor holes
+     * 3. call mergeHoles()
      * @param segment the segment to be removed
      * @return return true if the segment can be found, and false otherwise
      */
     bool removeSegment(const Segment &segment);
-
 
     /**
      * @brief iterate on the segments table and merge any consecutive holes by:
@@ -87,7 +93,8 @@ public:
      * @param process the process to be removed
      * @return true on success, and false if the process can't be founded
      */
-    void removeProcess(Process process);
+   // bool removeProcess(Process process);
+      void removeProcess(Process process);
 
 
     //Belal
@@ -107,16 +114,16 @@ public:
      * @brief memoryShuffle place all free locations togther into one large hole
      */
     void memoryShuffle();
-    //    // GUI basic functionality:
+
+
+//    // GUI basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    uint32_t memorySize() const;
-    void resizeMemory(const uint32_t &newMemorySize);
-
 protected:
     virtual QHash<int, QByteArray> roleNames() const override;
+
 private:
     //memory size in bytes
     uint32_t m_memorySize;

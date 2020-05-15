@@ -20,11 +20,13 @@ public:
     bool removeSegment(const Segment &segment);
 
     void sortTheSegmentTableOnLimit();
-
     void sortTheSegmentTableOnBase();
 
+    QList<Segment> &segmentTable();
     QList<Segment> segmentTable() const;
+    void setSegmentTable(const QList<Segment> &segmentTable);
 
+    int sizeOfSegmentTable() const;
 
 private:
     long long m_pid;
