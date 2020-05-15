@@ -20,7 +20,7 @@ bool Process::removeSegment(const Segment &segment)
 void Process::sortTheSegmentTableOnLimit()
 {
     std::sort(m_segmentTable.begin(), m_segmentTable.end(), [](const Segment &segment1, const Segment &segment2){
-        return segment1.m_limit < segment2.m_limit;
+        return segment1.m_limit > segment2.m_limit;
     });
 }
 
@@ -29,6 +29,11 @@ void Process::sortTheSegmentTableOnBase()
     std::sort(m_segmentTable.begin(), m_segmentTable.end(), [](const Segment &segment1, const Segment &segment2){
         return segment1.m_base < segment2.m_base;
     });
+}
+
+QList<Segment> &Process::segmentTable()
+{
+    return m_segmentTable;
 }
 
 

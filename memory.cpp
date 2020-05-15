@@ -31,7 +31,7 @@ std::pair<bool, Segment> Memory::addProcessSegment(const Segment &segment, Memor
         m_segments[index_new_seg ].m_base =   m_segments[index_new_seg+1].m_base ;
 
         //update the base and limit of new hole
-        m_segments[index_new_seg+1].m_base  =  m_segments[index_new_seg].m_base + m_segments[index_new_seg ].m_limit + 1;
+        m_segments[index_new_seg+1].m_base  =  m_segments[index_new_seg].m_base + m_segments[index_new_seg ].m_limit;
         m_segments[index_new_seg+1].m_limit =  m_segments[index_new_seg +1].m_limit -  m_segments[index_new_seg].m_limit;
 
         if(m_segments[index_new_seg +1].m_limit < 1)
@@ -130,7 +130,7 @@ bool Memory::addProcess(Process process, Memory::AllocationMethod allocationMeth
     int breakIndex = 0;
 
     process.sortTheSegmentTableOnLimit();
-    QList<Segment> segmentTable = process.segmentTable();
+    QList<Segment> &segmentTable = process.segmentTable();
 
     for(int i = 0; i < segmentTable.size(); ++i)
     {
@@ -165,45 +165,16 @@ bool Memory::addProcess(Process process, Memory::AllocationMethod allocationMeth
 }
 
 
-//bool Memory::removeProcess(Process process)
-//{
-//for ( int n = 0 ; n <  m_processTable.size() ; ++n )
-//{
-//    if ( m_processTable[n] == process)
-//    {
-//         QList<Segment> segmentTable = process.segmentTable();
-//           for (int i = 0 ; i < process.sizeOfSegmentTable() ; ++i)
-//           {
-//               if (m_segments[i] == segmentTable[i])
-//               {
-//                   removeSegment(segmentTable[i]);
-//                   process.setSegmentTable(segmentTable);
-//               }
-//           }
-//           mergeHoles();
-//       return true;
-//    }
-
-//       else {
-//           return false;
-//            }
-//    }
-
-//}
-
-
 void Memory::removeProcess(Process process)
 {
-    QList<Segment> segmentTable = process.segmentTable();
-           for (int i = 0 ; i < process.sizeOfSegmentTable() ; ++i)
-           {
-               if (m_segments[i] == segmentTable[i])
-               {
-                   removeSegment(segmentTable[i]);
-                   process.setSegmentTable(segmentTable);
-               }
-           }
-           mergeHoles();
+    QList<Segment> &segmentTable = process.segmentTable();
+
+    for(const Segment &segment: segmentTable)
+    {
+        removeSegment(segment);
+    }
+
+    mergeHoles();
 }
 
 

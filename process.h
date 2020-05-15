@@ -22,6 +22,7 @@ public:
     void sortTheSegmentTableOnLimit();
     void sortTheSegmentTableOnBase();
 
+    QList<Segment> &segmentTable();
     QList<Segment> segmentTable() const;
     void setSegmentTable(const QList<Segment> &segmentTable);
 
