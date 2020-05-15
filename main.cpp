@@ -1,26 +1,9 @@
 #include <iostream>
 #include "memory.h"
 
-bool compare(int x, int y)
-{
-    return x > y;
-}
 int main()
 {
     Memory memory(10000);
-
-
-    std::vector<int> v = {5, 3, 2, 1, 9};
-
-    std::sort(v.begin(), v.end(), [](int x, int y){
-        return x > y;
-    });
-
-
-    for(int i = 0; i < v.size(); ++i)
-    {
-        std::cout << v[i] << std::endl;
-    }
 
 
 //    std::cout << memory.findHole(800, Memory::AllocationMethod::FIRST_FIT) << std::endl;

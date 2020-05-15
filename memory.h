@@ -79,7 +79,7 @@ public:
      * @param process the process to be removed
      * @return true on success, and false if the process can't be founded
      */
-    bool removeProcess(const Process &process);
+    bool removeProcess( Process process);
 
 
     //Belal

@@ -126,16 +126,11 @@ void Memory::mergeHoles()
 
 bool Memory::addProcess(Process process, Memory::AllocationMethod allocationMethode)
 {
-    //replace this with your implementation
-
     bool success = true;
     int breakIndex = 0;
 
     process.sortTheSegmentTableOnLimit();
-
-
     QList<Segment> segmentTable = process.segmentTable();
-
 
     for(int i = 0; i < segmentTable.size(); ++i)
     {
@@ -152,8 +147,6 @@ bool Memory::addProcess(Process process, Memory::AllocationMethod allocationMeth
             break;
         }
     }
-
-
     if(success)
     {
         process.setSegmentTable(segmentTable);
@@ -168,15 +161,36 @@ bool Memory::addProcess(Process process, Memory::AllocationMethod allocationMeth
         }
         mergeHoles();
     }
-
     return success;
 }
 
-bool Memory::removeProcess(const Process &process)
+
+bool Memory::removeProcess(Process process)
 {
-    //replace this with your implementation
-    return true;
+for ( int n = 0 ; n <  m_processTable.size() ; ++n )
+{
+    if (m_processTable[n] == process)
+    {
+         QList<Segment> segmentTable = process.segmentTable();
+           for (int i = 0 ; i < process.sizeOfSegmentTable() ; ++i)
+           {
+               if (m_segments[i] == segmentTable[i])
+               {
+                   removeSegment(segmentTable[i]);
+                   process.setSegmentTable(segmentTable);
+               }
+           }
+           mergeHoles();
+       return true;
+    }
+
+       else {
+           return false;
+            }
+    }
+
 }
+
 
 bool Memory::addHole(const Segment &hole)
 {
