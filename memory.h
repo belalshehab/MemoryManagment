@@ -87,7 +87,7 @@ public:
 
     /**
      * @brief addHole:
-     * 1. remove the process segment
+     * 1. search for the segment to cut
      * 2. creat new process segment with the same base as the previous segment but with limit = hole base - process segment hole
      * 3. insert the hole
      * 4. if the hole  insert new process segment
@@ -95,7 +95,7 @@ public:
      * @attention this function is for the memory initialization only
      * @return true on success, and false otherwise
      */
-    bool addHole(const Segment &hole);
+    Q_INVOKABLE bool addHole(quint32 limit, quint32 base);
 
     /**
      * @brief memoryShuffle place all free locations togther into one large hole
@@ -103,7 +103,8 @@ public:
     void memoryShuffle();
 
     uint32_t memorySize() const;
-    void resizeMemory(const uint32_t &newMemorySize);
+    void resizeMemory(quint32 newMemorySize);
+    void resetMemory(quint32 memorySize = 0);
 
 
     SegmentTableModel *segmentTableModel();
@@ -122,10 +123,10 @@ private:
     SegmentTableModel m_segmentTableModel;
     MemoryModel m_memoryModel;
 
-    //memory size in bytes
-    uint32_t m_memorySize;
     QList<Segment> &m_memorySegments;
-//    QList<Process> m_processTable;
+
+    //memory size in bytes
+    quint32 m_memorySize;
 
     quint32 m_lastPid;
 };

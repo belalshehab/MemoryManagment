@@ -1,6 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
+import QtQuick.Dialogs 1.2
+
 import MemoryManagment 1.0
 
 ApplicationWindow {
@@ -60,9 +62,17 @@ ApplicationWindow {
             }
             else
             {
+                warningPopup.open();
                 console.log("Can't add process");
             }
 
         }
     }
+
+   WarningPopup
+   {
+       id: warningPopup
+
+
+   }
 }

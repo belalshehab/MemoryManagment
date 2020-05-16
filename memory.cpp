@@ -1,9 +1,9 @@
 #include "memory.h"
 #include <QDebug>
 
-Memory::Memory(QObject *parent) : QObject(parent), m_memorySegments(*m_memoryModel.segments()), m_lastPid(1), m_memorySize(10000)
+Memory::Memory(QObject *parent) : QObject(parent), m_memorySegments(*m_memoryModel.segments()), m_lastPid(1)
 {
-
+    m_memorySize = 10000;
     m_memorySegments.push_back(Segment(0, 0, 1400, 1, true));
     m_memorySegments.push_back(Segment(1, 1000, 1000, 1401, false));
     m_memorySegments.push_back(Segment(0, 0, 800, 2401, true));
@@ -16,6 +16,8 @@ Memory::Memory(QObject *parent) : QObject(parent), m_memorySegments(*m_memoryMod
     {
         m_memorySegments[i].m_color = "lightBlue";
     }
+
+//    resetMemory(10000);
     m_memoryModel.update();
 }
 
@@ -131,13 +133,11 @@ void Memory::mergeHoles()
                 m_memorySegments[i].m_limit = m_memorySegments[i].m_limit + m_memorySegments[i+1].m_limit;
                 m_memorySegments.removeAt(i +1);
             }
-
             else
             {
                 ++i;
             }
         }
-
         else
         {
             ++i;
@@ -205,8 +205,9 @@ void Memory::removeProcess(quint32 pid)
     m_memoryModel.update();
 }
 
-bool Memory::addHole(const Segment &hole)
+bool Memory::addHole(quint32 limit, quint32 base)
 {
+//    m_memorySegments
     //replace this with your implementation
     return false;
 }
@@ -224,7 +225,7 @@ uint32_t Memory::memorySize() const
 }
 
 
-void Memory::resizeMemory(const uint32_t &newMemorySize)
+void Memory::resizeMemory(quint32 newMemorySize)
 {
     if(newMemorySize > m_memorySize)
     {
@@ -255,4 +256,17 @@ void Memory::resizeMemory(const uint32_t &newMemorySize)
             m_memorySize = newMemorySize;
         }
     }
+}
+
+void Memory::resetMemory(quint32 memorySize)
+{
+    if(memorySize > 0)
+    {
+        m_memorySize = memorySize;
+    }
+
+    m_memorySegments.clear();
+    m_memorySegments.push_back(Segment(1, 1001, 1, m_memorySize, false));
+
+    m_memoryModel.update();
 }

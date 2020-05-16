@@ -10,5 +10,6 @@
         <file>ProcessSegments.qml</file>
         <file>SegmentDelegate.qml</file>
         <file>MemorySegmentDelegate.qml</file>
+        <file>WarningPopup.qml</file>
     </qresource>
 </RCC>
