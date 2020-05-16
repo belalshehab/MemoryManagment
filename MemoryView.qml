@@ -83,7 +83,7 @@ GrayRectangle
             segmentPid: model.pid
             limit: model.limit
             base: model.base
-            name: model.name
+            name: model.isHole ? "" : model.name
             color: model.isHole ? "#09ffffff" : model.color
 
             onDeleteClicked: {

@@ -49,8 +49,10 @@ ApplicationWindow {
 
         model: memory.segmentTableModel
 
+
         onAddProcessClicked: {
-            if(memory.addProcess(allocationMethods.algorithm, processColor))
+            model.color = processColor
+            if(memory.addProcess(allocationMethods.algorithm))
             {
                 processColor = Qt.rgba(Math.random(), Math.random(), Math.random(), 1);
                 processSegments.model.clear();

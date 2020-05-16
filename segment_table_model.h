@@ -4,6 +4,7 @@
 #include "segment.h"
 
 #include <QAbstractListModel>
+#include <QColor>
 
 class SegmentTableModel : public QAbstractListModel
 {
@@ -12,6 +13,7 @@ class SegmentTableModel : public QAbstractListModel
     Q_PROPERTY(bool isEmpty READ isEmpty NOTIFY isEmptyChanged)
     Q_PROPERTY(quint32 lastPid READ lastPid WRITE setLastPid NOTIFY lastPidChanged)
 
+    Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
     enum RoleNames {
         SidRole = Qt::UserRole,
         PidRole,
@@ -19,7 +21,6 @@ class SegmentTableModel : public QAbstractListModel
         BaseRole,
         IsHoleRole,
         NameRole,
-        ColorRole,
     };
 
 public:
@@ -44,9 +45,13 @@ public:
 
     Q_INVOKABLE QList<Segment> *segmentList();
 
+    QColor color() const;
+    void setColor(const QColor &color);
+
 signals:
     void isEmptyChanged();
     void lastPidChanged();
+    void colorChanged();
 protected:
     virtual QHash<int, QByteArray> roleNames() const override;
 private:
@@ -54,6 +59,8 @@ private:
     quint32 m_lastSid;
     quint32 m_lastPid;
     QHash <int, QByteArray> m_roleNames;
+
+    QColor m_color;
 };
 
 #endif // PROCESSMODEL_H

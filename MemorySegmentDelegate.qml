@@ -16,7 +16,7 @@ Item {
 
     signal deleteClicked
 
-    height: limit /10
+    height: limit > 200 ? limit /10 : 20
 
     Rectangle{
         id: rec
@@ -81,17 +81,14 @@ Item {
 
 
         text: root.limit + root.base -1
+        anchors.rightMargin: 10
         anchors.right: rec.left
 
-        horizontalAlignment: Text.AlignHCenter
+        horizontalAlignment: Text.AlignRight
         verticalAlignment: Text.AlignVCenter
         font.pixelSize: 15
     }
 
 }
 
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/
+

@@ -73,7 +73,7 @@ public:
      * @return true if all segments has ben inserted successfully, false otherwise
      *
      */
-    Q_INVOKABLE bool addProcess(AllocationMethod allocationMethod, const QColor &color);
+    Q_INVOKABLE bool addProcess(AllocationMethod allocationMethod);
 
     /**
      * @brief removeProcess:

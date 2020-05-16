@@ -12,7 +12,6 @@ SegmentTableModel::SegmentTableModel(QObject *parent)
     m_roleNames[BaseRole] = "base";
     m_roleNames[IsHoleRole] = "isHole";
     m_roleNames[NameRole] = "name";
-    m_roleNames[ColorRole] = "color";
 }
 
 void SegmentTableModel::append(quint32 limit, const QString &name)
@@ -88,8 +87,6 @@ QVariant SegmentTableModel::data(const QModelIndex &index, int role) const
         return m_segmentList[index.row()].m_isHole;
     case NameRole:
         return m_segmentList[index.row()].m_name;
-    case ColorRole:
-        return m_segmentList[index.row()].m_color;
     }
 
     return QVariant();
@@ -98,6 +95,21 @@ QVariant SegmentTableModel::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> SegmentTableModel::roleNames() const
 {
     return m_roleNames;
+}
+
+QColor SegmentTableModel::color() const
+{
+    return m_color;
+}
+
+void SegmentTableModel::setColor(const QColor &color)
+{
+    if(m_color == color)
+    {
+        return;
+    }
+    m_color = color;
+    emit colorChanged();
 }
 
 QList<Segment> *SegmentTableModel::segmentList()

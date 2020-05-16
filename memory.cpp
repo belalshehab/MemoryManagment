@@ -4,7 +4,7 @@
 Memory::Memory(QObject *parent) : QObject(parent), m_memorySegments(*m_memoryModel.segments()), m_lastPid(1), m_memorySize(10000)
 {
 
-    m_memorySegments.push_back(Segment(0, 0, 1400, 0, true));
+    m_memorySegments.push_back(Segment(0, 0, 1400, 1, true));
     m_memorySegments.push_back(Segment(1, 1000, 1000, 1401, false));
     m_memorySegments.push_back(Segment(0, 0, 800, 2401, true));
     m_memorySegments.push_back(Segment(2, 1000, 1100, 3201, false));
@@ -145,10 +145,11 @@ void Memory::mergeHoles()
     }
 }
 
-bool Memory::addProcess(AllocationMethod allocationMethod, const QColor &color)
+bool Memory::addProcess(AllocationMethod allocationMethod)
 {
     auto &segmentTable =  *m_segmentTableModel.segmentList();
 
+    QColor color = m_segmentTableModel.color();
     bool success = true;
     int breakIndex = 0;
 
@@ -159,7 +160,6 @@ bool Memory::addProcess(AllocationMethod allocationMethod, const QColor &color)
     for(int i = 0; i < segmentTable.size(); ++i)
     {
         segmentTable[i].m_color = color;
-
         auto addedSegmentPair = addProcessSegment(segmentTable[i], allocationMethod);
         if(addedSegmentPair.first)
         {
