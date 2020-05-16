@@ -73,7 +73,7 @@ public:
      * @return true if all segments has ben inserted successfully, false otherwise
      *
      */
-    bool addProcess(Process process, AllocationMethod allocationMethode);
+    Q_INVOKABLE bool addProcess(AllocationMethod allocationMethod, const QColor &color);
 
     /**
      * @brief removeProcess:
@@ -83,7 +83,7 @@ public:
      * @param process the process to be removed
      * @return true on success, and false if the process can't be founded
      */
-    void removeProcess(Process process);
+    Q_INVOKABLE void removeProcess(quint32 pid);
 
     /**
      * @brief addHole:
@@ -106,9 +106,6 @@ public:
     void resizeMemory(const uint32_t &newMemorySize);
 
 
-    Q_INVOKABLE bool addProcess(Memory::AllocationMethod allocationMethod, const QColor &color);
-    Q_INVOKABLE bool removeProcess(quint32 pid);
-
     SegmentTableModel *segmentTableModel();
     MemoryModel *memoryModel();
 
@@ -128,7 +125,7 @@ private:
     //memory size in bytes
     uint32_t m_memorySize;
     QList<Segment> &m_memorySegments;
-    QList<Process> m_processTable;
+//    QList<Process> m_processTable;
 
     quint32 m_lastPid;
 };

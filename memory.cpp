@@ -145,19 +145,22 @@ void Memory::mergeHoles()
     }
 }
 
-bool Memory::addProcess(Process process, Memory::AllocationMethod allocationMethode)
+bool Memory::addProcess(AllocationMethod allocationMethod, const QColor &color)
 {
+    auto &segmentTable =  *m_segmentTableModel.segmentList();
+
     bool success = true;
     int breakIndex = 0;
 
-    process.sortTheSegmentTableOnLimit();
-    QList<Segment> &segmentTable = process.segmentTable();
+    std::sort(segmentTable.begin(), segmentTable.end(), [](const Segment &segment1, const Segment &segment2){
+        return segment1.m_limit > segment2.m_limit;
+    });
 
     for(int i = 0; i < segmentTable.size(); ++i)
     {
-        segmentTable[i].m_color = process.color();
+        segmentTable[i].m_color = color;
 
-        auto addedSegmentPair = addProcessSegment(segmentTable[i], allocationMethode);
+        auto addedSegmentPair = addProcessSegment(segmentTable[i], allocationMethod);
         if(addedSegmentPair.first)
         {
             segmentTable[i] = addedSegmentPair.second;
@@ -172,9 +175,8 @@ bool Memory::addProcess(Process process, Memory::AllocationMethod allocationMeth
     }
     if(success)
     {
-        process.setSegmentTable(segmentTable);
-//        m_processTable.push_back(process);
         m_memoryModel.update();
+        ++m_lastPid;
     }
 
     else
@@ -185,18 +187,18 @@ bool Memory::addProcess(Process process, Memory::AllocationMethod allocationMeth
         }
         mergeHoles();
     }
-
     return success;
 }
 
 
-void Memory::removeProcess(Process process)
-{
-    QList<Segment> &segmentTable = process.segmentTable();
-
-    for(const Segment &segment: segmentTable)
+void Memory::removeProcess(quint32 pid)
+{   
+    for(const Segment &segment: m_memorySegments)
     {
-        removeSegment(segment);
+        if(segment.m_pid == pid)
+        {
+            removeSegment(segment);
+        }
     }
     mergeHoles();
 
@@ -254,41 +256,3 @@ void Memory::resizeMemory(const uint32_t &newMemorySize)
         }
     }
 }
-
-
-bool Memory::addProcess(Memory::AllocationMethod allocationMethod, const QColor &color)
-{
-    auto &l =  *m_segmentTableModel.segmentList();
-
-    Process p(m_lastPid);
-    p.setSegmentTable(l);
-
-    p.setColor(color);
-
-    auto success =  addProcess(p, allocationMethod);
-
-    if(success)
-    {
-        ++m_lastPid;
-    }
-    qDebug() << m_memoryModel.rowCount();
-    return success;
-}
-
-bool Memory::removeProcess(quint32 pid)
-{
-     auto p = std::find_if(m_processTable.begin(), m_processTable.end(), [=](const Process &p){
-        return pid == p.pid();
-    });
-
-    if(p == m_processTable.end())
-    {
-        return false;
-    }
-    else
-    {
-        removeProcess(*p);
-        return true;
-    }
-}
-

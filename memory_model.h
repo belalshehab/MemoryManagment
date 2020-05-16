@@ -2,7 +2,6 @@
 #define MEMORY_H
 
 #include "segment.h"
-#include "process.h"
 
 #include <QAbstractListModel>
 #include <QList>
