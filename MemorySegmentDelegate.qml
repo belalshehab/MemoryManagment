@@ -10,12 +10,13 @@ Item {
 
     property int segmentPid
     property int limit
+    property int base
     property alias name: segmentNameLabel.text
     property alias color: rec.color
 
     signal deleteClicked
 
-    //    height: limit /10
+    height: limit /10
 
     Rectangle{
         id: rec
@@ -79,9 +80,8 @@ Item {
         anchors.left: parent.left
 
 
-        text: root.limit
+        text: root.limit + root.base -1
         anchors.right: rec.left
-        anchors.rightMargin: 0
 
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter

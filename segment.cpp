@@ -1,10 +1,12 @@
 #include "segment.h"
+#include <QDebug>
 
 
-Segment::Segment(uint32_t sid, uint32_t pid, uint32_t limit, uint32_t base, bool isHole, const QString &name):
-    m_sid(sid), m_limit(limit), m_base(base), m_isHole(isHole), m_pid(pid)
+Segment::Segment(quint32 sid, quint32 pid, quint32 limit, quint32 base, bool isHole, const QString &name):
+    m_sid(sid), m_pid(pid), m_limit(limit), m_base(base), m_isHole(isHole)
 {
-    m_name = name.isEmpty() ? ("S" + QString::number(sid)) : name;
+    m_name = name.isEmpty() ? QString("P%0-S%1").arg(m_pid).arg(m_sid) : name;
+//    qDebug() << m_name
 }
 
 bool Segment::operator==(const Segment &otherSegment)

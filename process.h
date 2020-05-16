@@ -13,7 +13,7 @@ class Process
 {
 public:
 
-    Process(long long pid, const QString &name = "");
+     explicit Process(quint32 pid, const QString &name = "");
 
 
     void addSegment(const Segment &segment);
@@ -28,8 +28,13 @@ public:
 
     int sizeOfSegmentTable() const;
 
+    QColor color() const;
+    void setColor(const QColor &color);
+
+    quint32 pid() const;
+
 private:
-    long long m_pid;
+    quint32 m_pid;
     QString m_name;
     QList<Segment> m_segmentTable;
     QColor m_color;

@@ -1,30 +1,28 @@
-#ifndef MEMORY_H
-#define MEMORY_H
+#ifndef KERNEL_H
+#define KERNEL_H
 
-#include "segment.h"
-#include "process.h"
+#include "segment_table_model.h"
+#include "memory_model.h"
 
-#include <QAbstractListModel>
-#include <QVariant>
-#include <QList>
+#include <QObject>
 
-#include <iostream>
-
-class Memory: public QAbstractListModel
+class Memory : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(SegmentTableModel* segmentTableModel READ segmentTableModel NOTIFY segmentTableModelChanged)
+    Q_PROPERTY(MemoryModel* memoryModel READ memoryModel NOTIFY memoryModelChanged)
+
+    Q_PROPERTY(quint32 lastPid READ lastPid NOTIFY lastPidChanged)
+
 public:
     Q_ENUMS(AllocationMethod)
-    //public:
     enum AllocationMethod{
         FIRST_FIT = 1, BEST_FIT, WORST_FIT
     };
 public:
     explicit Memory(QObject *parent = nullptr);
 
-
-    //Aya
     /**
      * @brief addProcessSegment:
      * 1. search with findHole
@@ -42,10 +40,9 @@ public:
      * @param allocationMethod the AllocationMethod to be used for selecting which hole
      * @return the index of the suitable hole, or -1 if there is no big enough hole
      */
-    int findHole(uint32_t limitOfSegment, AllocationMethod allocationMethod);
+    int findHole(quint32 limitOfSegment, AllocationMethod allocationMethod);
 
 
-    //Esraa
     /**
      * @brief removeSegment:
      * 1. search for the segment to be removed
@@ -65,7 +62,6 @@ public:
     void mergeHoles();
 
 
-    //Toka
     /**
      * @brief addProcess:
      * 1. sort the process segmentTable in descending order according to the segment limit
@@ -89,8 +85,6 @@ public:
      */
     void removeProcess(Process process);
 
-
-    //Belal
     /**
      * @brief addHole:
      * 1. remove the process segment
@@ -107,21 +101,36 @@ public:
      * @brief memoryShuffle place all free locations togther into one large hole
      */
     void memoryShuffle();
-    //    // GUI basic functionality:
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     uint32_t memorySize() const;
     void resizeMemory(const uint32_t &newMemorySize);
 
-protected:
-    virtual QHash<int, QByteArray> roleNames() const override;
+
+    Q_INVOKABLE bool addProcess(Memory::AllocationMethod allocationMethod, const QColor &color);
+    Q_INVOKABLE bool removeProcess(quint32 pid);
+
+    SegmentTableModel *segmentTableModel();
+    MemoryModel *memoryModel();
+
+
+    quint32 lastPid() const;
+
+signals:
+    void segmentTableModelChanged();
+    void memoryModelChanged();
+    void lastPidChanged();
+public slots:
+
 private:
+    SegmentTableModel m_segmentTableModel;
+    MemoryModel m_memoryModel;
+
     //memory size in bytes
     uint32_t m_memorySize;
-    QList<Segment> m_segments;
+    QList<Segment> &m_memorySegments;
     QList<Process> m_processTable;
+
+    quint32 m_lastPid;
 };
 
-#endif // MEMORY_H
+#endif // KERNEL_H

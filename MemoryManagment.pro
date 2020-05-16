@@ -16,8 +16,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         memory.cpp \
+        memory_model.cpp \
         process.cpp \
-        segment.cpp
+        segment.cpp \
+        segment_table_model.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,5 +36,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     memory.h \
+    memory_model.h \
     process.h \
-    segment.h
+    segment.h \
+    segment_table_model.h

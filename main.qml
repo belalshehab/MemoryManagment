@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
+import MemoryManagment 1.0
 
 ApplicationWindow {
     id: applicationWindow
@@ -23,6 +24,7 @@ ApplicationWindow {
         anchors.rightMargin: 20
     }
 
+
     MemoryView {
         id: memoryView
 
@@ -33,53 +35,10 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.rightMargin: 30
 
-        model: ListModel {
-            ListElement {
-                segmentPid: 1
-                name: "Segment 1"
-                limit: 1000
-                color: "blue"
-            }
-
-            ListElement {
-                segmentPid: 0
-                name: ""
-                limit: 1200
-                color: "transparent"
-            }
-            ListElement {
-                segmentPid: 3
-                name: "Segment 2"
-                limit: 1500
-                color: "red"
-            }
-
-            ListElement {
-                segmentPid: 1
-                name: "Segment 2"
-                limit: 850
-                color: "blue"
-            }
-            ListElement {
-                segmentPid: 0
-                name: ""
-                limit: 500
-                color: "transparent"
-            }
-            ListElement {
-                segmentPid: 3
-                name: "Segment 1"
-                limit: 1830
-                color: "red"
-            }
-            ListElement {
-                segmentPid: 0
-                name: ""
-                limit: 2000
-                color: "transparent"
-            }
-        }
+        model: memory.memoryModel
     }
+
+
 
     ProcessSegments {
         id: processSegments
@@ -88,44 +47,20 @@ ApplicationWindow {
         width: 576
         height: 335
 
-        model: ListModel {
-            ListElement {
-                sid: 1
-                name: "Segment 1"
-                limit: 100
-            }
-
-            ListElement {
-                sid: 2
-                name: "Segment 2"
-                limit: 200
-            }
-
-            ListElement {
-                sid: 3
-                name: "Segment 3"
-                limit: 150
-            }
-
-            ListElement {
-                sid: 4
-                name: "Segment 4"
-                limit: 400
-            }
-        }
+        model: memory.segmentTableModel
 
         onAddProcessClicked: {
-            console.log("onAddProcessClicked")
-            processColor = Qt.rgba(Math.random(), Math.random(), Math.random(), 1);
+            if(memory.addProcess(allocationMethods.algorithm, processColor))
+            {
+                processColor = Qt.rgba(Math.random(), Math.random(), Math.random(), 1);
+                processSegments.model.clear();
+                processSegments.model.lastPid = memory.lastPid
+            }
+            else
+            {
+                console.log("Can't add process");
+            }
+
         }
     }
-
-
-
 }
-
-/*##^##
-Designer {
-    D{i:8;anchors_height:335;anchors_width:576;anchors_x:132;anchors_y:144}
-}
-##^##*/

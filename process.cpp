@@ -2,9 +2,10 @@
 #include <list>
 #include <algorithm>
 
-Process::Process(long long pid, const QString &name):
-    m_pid(pid), m_name(name)
+Process::Process(quint32 pid, const QString &name):
+    m_pid(pid)
 {   
+    m_name = name.isEmpty() ? QString("P%0").arg(pid) : name;
 }
 
 void Process::addSegment(const Segment &segment)
@@ -45,6 +46,21 @@ QList<Segment> Process::segmentTable() const
 int Process::sizeOfSegmentTable() const
 {
     return m_segmentTable.count();
+}
+
+QColor Process::color() const
+{
+    return m_color;
+}
+
+void Process::setColor(const QColor &color)
+{
+    m_color = color;
+}
+
+quint32 Process::pid() const
+{
+    return m_pid;
 }
 
 void Process::setSegmentTable(const QList<Segment> &segmentTable)

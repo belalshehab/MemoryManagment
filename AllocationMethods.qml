@@ -1,7 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
-import memory 0.1
+import MemoryManagment 1.0
 
 GrayRectangle {
     id: root
@@ -10,7 +10,6 @@ GrayRectangle {
 
 
     property int algorithm : Memory.FIRST_FIT
-//    property int algorithm
 
     RowLayout {
         id: buttonsColumn
@@ -53,7 +52,7 @@ GrayRectangle {
             Layout.fillHeight: true
             Layout.fillWidth: false
             onClicked: {
-                algorithm = Memory.BEST_FIT
+                algorithm = MemoryModel.BEST_FIT
             }
         }
 
@@ -67,12 +66,7 @@ GrayRectangle {
                 algorithm = Memory.WORST_FIT
             }
         }
-
-
     }
-
-
-
 }
 
 /*##^##

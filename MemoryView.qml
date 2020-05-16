@@ -80,10 +80,15 @@ GrayRectangle
 
         MemorySegmentDelegate {
             width: listView.width - 10
-            segmentPid: model.segmentPid
+            segmentPid: model.pid
             limit: model.limit
+            base: model.base
             name: model.name
-            color: model.color
+            color: model.isHole ? "#09ffffff" : model.color
+
+            onDeleteClicked: {
+                memory.removeProcess(segmentPid)
+            }
         }
     }
 }

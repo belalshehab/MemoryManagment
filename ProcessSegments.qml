@@ -53,7 +53,8 @@ GrayRectangle {
             Layout.fillHeight: false
 
             onClicked: {
-                segmentsView.model.append({"sid": segmentsView.model.count +1, "limit": limitSpinBox.value, "name": nameTextField.text})
+                segmentsView.model.append(limitSpinBox.value, nameTextField.text)
+                nameTextField.text = ""
             }
         }
 
@@ -119,7 +120,7 @@ GrayRectangle {
                 anchors.right: parent.right
                 anchors.top: nameLabel.bottom
 
-                text: qsTr("Segment name")
+                text: qsTr("")
 
                 font.weight: Font.Medium
                 font.capitalization: Font.MixedCase
@@ -209,6 +210,7 @@ GrayRectangle {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 
+            enabled: !segmentsView.model.isEmpty
             onClicked: {
                 addProcessClicked()
             }
