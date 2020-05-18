@@ -46,7 +46,7 @@ GrayRectangle
         anchors.margins: 20
         
         clip: true
-        spacing: 12
+        spacing: 20
 
         ScrollBar.vertical: ScrollBar{ width: 6}
         delegate: memorySegmentDelegate

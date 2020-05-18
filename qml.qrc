@@ -11,5 +11,9 @@
         <file>SegmentDelegate.qml</file>
         <file>MemorySegmentDelegate.qml</file>
         <file>WarningPopup.qml</file>
+        <file>resources/error.svg</file>
+        <file>MemoryInitPage.qml</file>
+        <file>MemorySizeInitPage.qml</file>
+        <file>TitledSpinBox.qml</file>
     </qresource>
 </RCC>

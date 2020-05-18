@@ -9,7 +9,7 @@ GrayRectangle {
     implicitWidth: 600
 
     property alias model: segmentsView.model
-    property int maximumSegmentLimit: 10000
+    property int maximumSegmentLimit
     property alias processColor: colorRec.color
 
     signal addProcessClicked
@@ -18,6 +18,9 @@ GrayRectangle {
         id: label
         color: "#cbcbcb"
         text: qsTr("Process")
+        font.weight: Font.Bold
+        anchors.top: parent.top
+        anchors.topMargin: 10
         font.pixelSize: 25
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
@@ -58,46 +61,23 @@ GrayRectangle {
             }
         }
 
-        Item{
-            id: element
+        TitledSpinBox {
+            id: limitSpinBox
+
             Layout.minimumWidth: 150
             Layout.preferredWidth: 150
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillHeight: true
-            Label{
-                id: limitLabel
-                anchors.top: parent.top
-                horizontalAlignment: Text.AlignHCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Limit")
-                font.weight: Font.Bold
-                font.pixelSize: 17
-                color: "#BABABA"
-            }
 
-            SpinBox {
-                id: limitSpinBox
-                anchors.top: limitLabel.bottom
-                anchors.topMargin: 0
-                font.weight: Font.Medium
-                font.pixelSize: 15
+            from: 1
+            to: root.maximumSegmentLimit
+            stepSize: 1
 
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                from: 1
-                to: root.maximumSegmentLimit
-
-                editable: true
-                wheelEnabled: true
-            }
+            text: qsTr("Limit")
         }
 
-
-
         Item {
-            id: element1
+            id: element
             Layout.minimumWidth: 150
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             Layout.fillHeight: true

@@ -1,23 +1,26 @@
 #include "memory.h"
 #include <QDebug>
 
-Memory::Memory(QObject *parent) : QObject(parent), m_memorySegments(*m_memoryModel.segments()), m_lastPid(1)
+Memory::Memory(QObject *parent) : QObject(parent), m_memorySegments(*m_memoryModel.segments())
 {
-    m_memorySize = 10000;
-    m_memorySegments.push_back(Segment(0, 0, 1400, 1, true));
-    m_memorySegments.push_back(Segment(1, 1000, 1000, 1401, false));
-    m_memorySegments.push_back(Segment(0, 0, 800, 2401, true));
-    m_memorySegments.push_back(Segment(2, 1000, 1100, 3201, false));
-    m_memorySegments.push_back(Segment(1, 1001, 400, 4301, false));
-    m_memorySegments.push_back(Segment(0, 0, 4800, 4701, true));
-    m_memorySegments.push_back(Segment(1, 1002, 500, 9501, false));
+//    m_memorySize = 10000;
+//    m_memorySegments.push_back(Segment(0, 0, 1400, 1, true));
+//    m_memorySegments.push_back(Segment(1, 1000, 1000, 1401, false));
+//    m_memorySegments.push_back(Segment(0, 0, 800, 2401, true));
+//    m_memorySegments.push_back(Segment(2, 1000, 1100, 3201, false));
+//    m_memorySegments.push_back(Segment(1, 1001, 400, 4301, false));
+//    m_memorySegments.push_back(Segment(0, 0, 4800, 4701, true));
+//    m_memorySegments.push_back(Segment(1, 1002, 500, 9501, false));
 
-    for(int i = 0; i < m_memorySegments.count(); ++i)
-    {
-        m_memorySegments[i].m_color = "lightBlue";
-    }
+//    for(int i = 0; i < m_memorySegments.count(); ++i)
+//    {
+//        m_memorySegments[i].m_color = "lightBlue";
+//    }
 
-//    resetMemory(10000);
+    resetMemory(1);
+
+//    addHole(2000, 1501);
+//    addHole(3000, 5501);
     m_memoryModel.update();
 }
 
@@ -34,6 +37,15 @@ MemoryModel *Memory::memoryModel()
 quint32 Memory::lastPid() const
 {
     return m_lastPid;
+}
+
+void Memory::setLastPid(const quint32 &lastPid)
+{
+    if(m_lastPid == lastPid)
+        return;
+
+    m_lastPid = lastPid;
+    emit lastPidChanged();
 }
 
 
@@ -160,6 +172,7 @@ bool Memory::addProcess(AllocationMethod allocationMethod)
     for(int i = 0; i < segmentTable.size(); ++i)
     {
         segmentTable[i].m_color = color;
+        segmentTable[i].m_pid = m_lastPid;
         auto addedSegmentPair = addProcessSegment(segmentTable[i], allocationMethod);
         if(addedSegmentPair.first)
         {
@@ -207,8 +220,38 @@ void Memory::removeProcess(quint32 pid)
 
 bool Memory::addHole(quint32 limit, quint32 base)
 {
-//    m_memorySegments
-    //replace this with your implementation
+    for(int i = 0; i < m_memorySegments.count(); ++i)
+    {
+        Segment &s = m_memorySegments[i];
+//        s = m_memorySegments[i];
+        if(!s.m_isHole)
+        {
+            if(base >= s.m_base && (s.m_base + s.m_limit) > base)
+            {
+                if((base + limit) <= (s.m_base + s.m_limit))
+                {
+                    m_memorySegments.insert(i+1, Segment(0, 0, limit, base, true));
+
+                    if(base + limit < s.m_base + s.m_limit)
+                    {
+                        m_memorySegments.insert(i+2, Segment(1, m_lastPid++, (s.m_base + s.m_limit) - (base + limit), base + limit));
+                        m_memorySegments[i+2].m_color = "lightBlue";
+                    }
+
+                    if(base == s.m_base)
+                    {
+                        m_memorySegments.removeAt(i);
+                    }
+                    else
+                    {
+                        s.m_limit = base - s.m_base;
+                    }
+                    m_memoryModel.update();
+                    return true;
+                }
+            }
+        }
+    }
     return false;
 }
 
@@ -256,6 +299,8 @@ void Memory::resizeMemory(quint32 newMemorySize)
             m_memorySize = newMemorySize;
         }
     }
+
+    emit memorySizeChanged();
 }
 
 void Memory::resetMemory(quint32 memorySize)
@@ -263,10 +308,11 @@ void Memory::resetMemory(quint32 memorySize)
     if(memorySize > 0)
     {
         m_memorySize = memorySize;
+        emit memorySizeChanged();
     }
-
+    m_lastPid = 1;
     m_memorySegments.clear();
-    m_memorySegments.push_back(Segment(1, 1001, 1, m_memorySize, false));
-
+    m_memorySegments.push_back(Segment(1, m_lastPid++, m_memorySize, 1, false));
+    m_memorySegments.back().m_color = "lightBlue";
     m_memoryModel.update();
 }

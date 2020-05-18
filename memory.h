@@ -13,7 +13,8 @@ class Memory : public QObject
     Q_PROPERTY(SegmentTableModel* segmentTableModel READ segmentTableModel NOTIFY segmentTableModelChanged)
     Q_PROPERTY(MemoryModel* memoryModel READ memoryModel NOTIFY memoryModelChanged)
 
-    Q_PROPERTY(quint32 lastPid READ lastPid NOTIFY lastPidChanged)
+    Q_PROPERTY(quint32 lastPid READ lastPid WRITE setLastPid NOTIFY lastPidChanged)
+    Q_PROPERTY(quint32 memorySize READ memorySize WRITE resetMemory NOTIFY memorySizeChanged)
 
 public:
     Q_ENUMS(AllocationMethod)
@@ -100,11 +101,11 @@ public:
     /**
      * @brief memoryShuffle place all free locations togther into one large hole
      */
-    void memoryShuffle();
+    Q_INVOKABLE void memoryShuffle();
 
     uint32_t memorySize() const;
-    void resizeMemory(quint32 newMemorySize);
-    void resetMemory(quint32 memorySize = 0);
+    Q_INVOKABLE void resizeMemory(quint32 newMemorySize);
+    Q_INVOKABLE void resetMemory(quint32 memorySize = 0);
 
 
     SegmentTableModel *segmentTableModel();
@@ -112,11 +113,14 @@ public:
 
 
     quint32 lastPid() const;
+    void setLastPid(const quint32 &lastPid);
+
 
 signals:
     void segmentTableModelChanged();
     void memoryModelChanged();
     void lastPidChanged();
+    void memorySizeChanged();
 public slots:
 
 private:

@@ -16,7 +16,7 @@ Item {
 
     signal deleteClicked
 
-    height: limit > 200 ? limit /10 : 20
+    height: limit > 400 ? limit /10 : 40
 
     Rectangle{
         id: rec
@@ -74,15 +74,31 @@ Item {
     }
 
     Label {
-        id: segmentLimitLabel
+        id: segmentBaseLabel
+
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.rightMargin: 5
+        anchors.right: rec.left
+
+
+        text: root.base
+
+        horizontalAlignment: Text.AlignRight
+        verticalAlignment: Text.AlignVCenter
+        font.pixelSize: 15
+    }
+
+    Label {
+        id: segmentEndLabel
 
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
+        anchors.rightMargin: 5
+        anchors.right: rec.left
 
         text: root.limit + root.base -1
-        anchors.rightMargin: 10
-        anchors.right: rec.left
 
         horizontalAlignment: Text.AlignRight
         verticalAlignment: Text.AlignVCenter

@@ -10,6 +10,7 @@ Popup {
     implicitWidth: 400
     implicitHeight: 300
 
+    property alias message: label.text
     background: GrayRectangle{
 
     }
@@ -17,12 +18,14 @@ Popup {
     modal: true
     dim: true
 
+    closePolicy: Popup.NoAutoClose
+
     Label {
         id: label
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
 
-        text: qsTr("Can't add this process try remove some processes first")
+        text: qsTr("Can't add this process try to remove some processes first")
 
         font.pixelSize: 15
         verticalAlignment: Text.AlignVCenter
@@ -40,4 +43,20 @@ Popup {
 
         onClicked: root.close()
     }
+
+    Image {
+        id: icon
+
+        anchors.verticalCenter: parent.top
+//        anchors.verticalCenterOffset: 0
+        anchors.horizontalCenter: parent.horizontalCenter
+        source: "resources/error.svg"
+        fillMode: Image.PreserveAspectFit
+    }
 }
+
+/*##^##
+Designer {
+    D{i:4;anchors_y:59}
+}
+##^##*/
