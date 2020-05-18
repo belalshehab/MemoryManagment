@@ -223,7 +223,6 @@ bool Memory::addHole(quint32 limit, quint32 base)
     for(int i = 0; i < m_memorySegments.count(); ++i)
     {
         Segment &s = m_memorySegments[i];
-//        s = m_memorySegments[i];
         if(!s.m_isHole)
         {
             if(base >= s.m_base && (s.m_base + s.m_limit) > base)
@@ -246,6 +245,7 @@ bool Memory::addHole(quint32 limit, quint32 base)
                     {
                         s.m_limit = base - s.m_base;
                     }
+                    mergeHoles();
                     m_memoryModel.update();
                     return true;
                 }
