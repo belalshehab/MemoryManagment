@@ -81,7 +81,7 @@ std::pair<bool, Segment> Memory::addProcessSegment(const Segment &segment, Memor
 int Memory::findHole(quint32 limitOfSegment, Memory::AllocationMethod allocationMethod)
 {
     uint32_t min = m_memorySize;
-
+    uint32_t max = 0 ;
     int min_index = -1 ;
 
     switch (allocationMethod) {
@@ -110,6 +110,16 @@ int Memory::findHole(quint32 limitOfSegment, Memory::AllocationMethod allocation
         break;
 
     case AllocationMethod::WORST_FIT:
+        for (int i = 0; i < m_memorySegments.size(); i++) {
+            if (m_memorySegments[i].m_isHole && m_memorySegments[i].m_limit >= limitOfSegment )
+            {
+                if ( max < m_memorySegments[i].m_limit )
+                {
+                    max = m_memorySegments[i].m_limit;
+                    min_index = i ;
+                }
+            }
+        }
         break;
 
     }
