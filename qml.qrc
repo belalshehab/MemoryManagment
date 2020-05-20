@@ -15,5 +15,6 @@
         <file>MemoryInitPage.qml</file>
         <file>MemorySizeInitPage.qml</file>
         <file>TitledSpinBox.qml</file>
+        <file>SegmentTable.qml</file>
     </qresource>
 </RCC>

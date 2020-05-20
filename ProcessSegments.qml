@@ -159,7 +159,7 @@ GrayRectangle {
             sid: model.sid
             limit: model.limit
             name: model.name
-
+            isDeletable: true
             onDeleteClicked: segmentsView.model.remove(index)
         }
     }

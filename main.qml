@@ -14,6 +14,20 @@ ApplicationWindow {
     color: "#333333"
     title: "Memory managment"
 
+//    function updateSegmentTable()
+//    {
+//        if(memoryView.currentPid == 0)
+//        {
+//            segmentTable.visible = false
+//        }
+//        else
+//        {
+//            segmentTable.model.clear();
+//            for()
+//            segmentTable.model.append()
+//        }
+//    }
+
     AllocationMethods {
         id: allocationMethods
 
@@ -37,19 +51,21 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.rightMargin: 30
 
+//        onCurrentPidChanged: updateSegmentTable()
         model: memory.memoryModel
     }
 
 
     SwipeView {
         id: swipeView
-        width: 627
-        height: 398
+        width: 600
+        height: 272
+        anchors.top: allocationMethods.bottom
+        anchors.topMargin: 30
         interactive: false
         clip: true
         anchors.left: parent.left
-        anchors.leftMargin: 100
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.leftMargin: 176
 
         MemorySizeInitPage{
             id: memorySizeInitPage
@@ -136,5 +152,25 @@ ApplicationWindow {
         }
     }
 
+    SegmentTable {
+        id: segmentTable
 
+        anchors.right: swipeView.right
+        anchors.left: swipeView.left
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 30
+
+        height: 260
+
+        currentPid: memoryView.currentPid
+
+        visible: memoryView.currentPid === 0 ? false : true
+        model:  memory.memoryModel
+    }
 }
+
+/*##^##
+Designer {
+    D{i:11;anchors_width:600;anchors_x:157}
+}
+##^##*/

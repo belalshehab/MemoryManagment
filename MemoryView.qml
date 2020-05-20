@@ -10,6 +10,7 @@ GrayRectangle
     implicitHeight: 600
 
     property alias model: listView.model
+    property int currentPid: 0
 
     Label {
         id: label
@@ -90,6 +91,7 @@ GrayRectangle
                                     listView.currentItem.segmentPid === segmentPid ? listView.currentItem.showDelete : false
             onDeleteClicked:
             {
+                root.currentPid = 0
                 memory.removeProcess(segmentPid)
             }
 
@@ -106,7 +108,7 @@ GrayRectangle
                     listView.currentIndex = index
                     showDelete = !showDelete
                 }
-
+                root.currentPid = showDelete ? listView.currentItem.segmentPid : 0
             }
         }
     }

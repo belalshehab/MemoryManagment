@@ -9,8 +9,11 @@ Item{
     
     property int sid
     property int limit
+    property int base: 0
     property string name
     
+    property bool isDeletable: true
+
     signal deleteClicked
 
     RowLayout{
@@ -33,6 +36,7 @@ Item{
             font.pixelSize: 10
             font.family: "ROBOTO"
 
+            visible: isDeletable
 
             onClicked:
             {
@@ -95,6 +99,38 @@ Item{
             color: "#BFBFBF"
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             opacity: 0.5
+        }
+
+        Label {
+            id: baseLabel
+            text: base
+            Layout.maximumWidth: 200
+            Layout.minimumWidth: 150
+            Layout.preferredWidth: 150
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            Layout.fillHeight: true
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            Layout.fillWidth: true
+            font.pixelSize: 15
+            color: "#fffffff0"
+
+            visible: !isDeletable
+        }
+
+        Rectangle{
+            Layout.preferredWidth: 1
+            Layout.preferredHeight: -1
+            Layout.bottomMargin: 5
+            Layout.topMargin: 5
+            Layout.fillHeight: true
+            Layout.maximumWidth: 1
+            Layout.minimumWidth: 1
+            color: "#BFBFBF"
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            opacity: 0.5
+
+            visible: !isDeletable
         }
 
         Label {
