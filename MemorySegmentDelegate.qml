@@ -14,6 +14,8 @@ Item {
     property alias name: segmentNameLabel.text
     property alias color: rec.color
 
+    property alias deleteButtonVisble: deleteButton.visible
+    signal segmentClicked
     signal deleteClicked
 
     height: limit > 400 ? limit /10 : 40
@@ -28,7 +30,8 @@ Item {
             onClicked: {
                 if(root.segmentPid > 0)
                 {
-                    deleteButton.visible = !deleteButton.visible
+//                    deleteButton.visible = !deleteButton.visible
+                    segmentClicked()
                 }
             }
         }
@@ -68,7 +71,6 @@ Item {
 
         onClicked:
         {
-            console.log("deleteClicked")
             deleteClicked()
         }
     }

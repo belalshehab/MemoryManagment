@@ -86,8 +86,29 @@ GrayRectangle
             name: model.isHole ? "" : model.name
             color: model.isHole ? "#09ffffff" : model.color
 
-            onDeleteClicked: {
+            onDeleteClicked:
+            {
                 memory.removeProcess(segmentPid)
+            }
+
+
+            onSegmentClicked:
+            {
+                if(segmentPid > 0)
+                {
+                    for(var child in listView.contentItem.children)
+                    {
+                        console.log(listView.contentItem.children[child].segmentPid)
+                        if(listView.contentItem.children[child].segmentPid === segmentPid)
+                        {
+                            listView.contentItem.children[child].deleteButtonVisble = !listView.contentItem.children[child].deleteButtonVisble
+                        }
+                        else
+                        {
+                            listView.contentItem.children[child].deleteButtonVisble = false
+                        }
+                    }
+                }
             }
         }
     }

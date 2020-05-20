@@ -3,24 +3,9 @@
 
 Memory::Memory(QObject *parent) : QObject(parent), m_memorySegments(*m_memoryModel.segments())
 {
-//    m_memorySize = 10000;
-//    m_memorySegments.push_back(Segment(0, 0, 1400, 1, true));
-//    m_memorySegments.push_back(Segment(1, 1000, 1000, 1401, false));
-//    m_memorySegments.push_back(Segment(0, 0, 800, 2401, true));
-//    m_memorySegments.push_back(Segment(2, 1000, 1100, 3201, false));
-//    m_memorySegments.push_back(Segment(1, 1001, 400, 4301, false));
-//    m_memorySegments.push_back(Segment(0, 0, 4800, 4701, true));
-//    m_memorySegments.push_back(Segment(1, 1002, 500, 9501, false));
-
-//    for(int i = 0; i < m_memorySegments.count(); ++i)
-//    {
-//        m_memorySegments[i].m_color = "lightBlue";
-//    }
 
     resetMemory(1);
 
-//    addHole(2000, 1501);
-//    addHole(3000, 5501);
     m_memoryModel.update();
 }
 
@@ -82,7 +67,7 @@ int Memory::findHole(quint32 limitOfSegment, Memory::AllocationMethod allocation
 {
     uint32_t min = m_memorySize;
     uint32_t max = 0 ;
-    int min_index = -1 ;
+    int segmentIndex = -1 ;
 
     switch (allocationMethod) {
     case AllocationMethod::FIRST_FIT:
@@ -90,7 +75,7 @@ int Memory::findHole(quint32 limitOfSegment, Memory::AllocationMethod allocation
         for (int i = 0; i < m_memorySegments.size(); ++i) {
             if (m_memorySegments[i].m_isHole && m_memorySegments[i].m_limit >= limitOfSegment )
             {
-                min_index = i ;
+                segmentIndex = i ;
                 break ;
             }
         }
@@ -100,10 +85,10 @@ int Memory::findHole(quint32 limitOfSegment, Memory::AllocationMethod allocation
         for (int i = 0; i < m_memorySegments.size(); i++) {
             if (m_memorySegments[i].m_isHole && m_memorySegments[i].m_limit >= limitOfSegment )
             {
-                if ( min > m_memorySegments[i].m_limit )
+                if (m_memorySegments[i].m_limit < min)
                 {
                     min = m_memorySegments[i].m_limit;
-                    min_index = i ;
+                    segmentIndex = i ;
                 }
             }
         }
@@ -113,17 +98,16 @@ int Memory::findHole(quint32 limitOfSegment, Memory::AllocationMethod allocation
         for (int i = 0; i < m_memorySegments.size(); i++) {
             if (m_memorySegments[i].m_isHole && m_memorySegments[i].m_limit >= limitOfSegment )
             {
-                if ( max < m_memorySegments[i].m_limit )
+                if (m_memorySegments[i].m_limit > max)
                 {
                     max = m_memorySegments[i].m_limit;
-                    min_index = i ;
+                    segmentIndex = i ;
                 }
             }
         }
         break;
-
     }
-    return min_index;
+    return segmentIndex;
 }
 
 bool Memory::removeSegment(const Segment &segment){
