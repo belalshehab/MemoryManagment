@@ -14,6 +14,7 @@ Item {
     property alias name: segmentNameLabel.text
     property alias color: rec.color
 
+    property bool showDelete: false
     property alias deleteButtonVisble: deleteButton.visible
     signal segmentClicked
     signal deleteClicked
@@ -30,7 +31,6 @@ Item {
             onClicked: {
                 if(root.segmentPid > 0)
                 {
-//                    deleteButton.visible = !deleteButton.visible
                     segmentClicked()
                 }
             }
