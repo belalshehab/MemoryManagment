@@ -15,7 +15,7 @@ GrayRectangle {
     Label {
         id: label
         color: "#cbcbcb"
-        text: qsTr("Segment table of process " + currentPid)
+        text: currentPid === 0 ? qsTr("Segment table") : qsTr("Segment table of process " + currentPid)
         font.weight: Font.Bold
         anchors.top: parent.top
         anchors.topMargin: 10

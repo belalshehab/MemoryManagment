@@ -9,24 +9,10 @@ ApplicationWindow {
     id: applicationWindow
     visible: true
     width: 1200
-    height: 720
+    height: 1000
 
     color: "#333333"
     title: "Memory managment"
-
-//    function updateSegmentTable()
-//    {
-//        if(memoryView.currentPid == 0)
-//        {
-//            segmentTable.visible = false
-//        }
-//        else
-//        {
-//            segmentTable.model.clear();
-//            for()
-//            segmentTable.model.append()
-//        }
-//    }
 
     AllocationMethods {
         id: allocationMethods
@@ -51,72 +37,9 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.rightMargin: 30
 
-//        onCurrentPidChanged: updateSegmentTable()
         model: memory.memoryModel
     }
 
-
-    SwipeView {
-        id: swipeView
-        width: 600
-        height: 272
-        anchors.top: allocationMethods.bottom
-        anchors.topMargin: 30
-        interactive: false
-        clip: true
-        anchors.left: parent.left
-        anchors.leftMargin: 176
-
-        MemorySizeInitPage{
-            id: memorySizeInitPage
-
-            onNextClicked: {
-                memory.resetMemory(memorySize)
-                swipeView.currentIndex += 1
-            }
-        }
-
-        MemoryInitPage{
-            id: memoryInitPage
-            memorySize: memory.memorySize
-
-            onAddHoleFaild:
-            {
-                warningPopup.message = qsTr("Can't add this Hole try reducing it's limit or change it's base")
-                warningPopup.open()
-            }
-            onFinishedClicked: {
-                swipeView.currentIndex += 1
-                memory.segmentTableModel.lastPid = memory.lastPid
-            }
-        }
-
-        ProcessSegments {
-            id: processSegments
-            width: 576
-            height: 335
-
-            maximumSegmentLimit: memory.memorySize
-            model: memory.segmentTableModel
-
-
-
-            onAddProcessClicked: {
-                model.color = processColor
-                if(memory.addProcess(allocationMethods.algorithm))
-                {
-                    processColor = Qt.rgba(Math.random(), Math.random(), Math.random(), 1);
-                    processSegments.model.clear();
-                    processSegments.model.lastPid = memory.lastPid
-                }
-                else
-                {
-                    warningPopup.message = qsTr("Can't add this process try to remove some processes first")
-                    warningPopup.open();
-                }
-            }
-        }
-    }
 
     WarningPopup
     {
@@ -152,25 +75,93 @@ ApplicationWindow {
         }
     }
 
-    SegmentTable {
-        id: segmentTable
+    ColumnLayout {
+        id: columnLayout
+        anchors.right: memoryView.left
+        anchors.rightMargin: 30
+        anchors.left: allocationMethods.left
+        anchors.bottom: memoryView.bottom
+        anchors.top: allocationMethods.bottom
+        anchors.topMargin: 30
 
-        anchors.right: swipeView.right
-        anchors.left: swipeView.left
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
+        SwipeView {
+            id: swipeView
+            Layout.fillHeight: true
+            Layout.fillWidth: true
 
-        height: 260
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
-        currentPid: memoryView.currentPid
 
-        visible: memoryView.currentPid === 0 ? false : true
-        model:  memory.memoryModel
+            interactive: false
+            clip: true
+
+            MemorySizeInitPage{
+                id: memorySizeInitPage
+
+                onNextClicked: {
+                    memory.resetMemory(memorySize)
+                    swipeView.currentIndex += 1
+                }
+            }
+
+            MemoryInitPage{
+                id: memoryInitPage
+                memorySize: memory.memorySize
+
+                onAddHoleFaild:
+                {
+                    warningPopup.message = qsTr("Can't add this Hole try reducing it's limit or change it's base")
+                    warningPopup.open()
+                }
+                onFinishedClicked: {
+                    swipeView.currentIndex += 1
+                    memory.segmentTableModel.lastPid = memory.lastPid
+                }
+            }
+
+            ProcessSegments {
+                id: processSegments
+                width: 576
+                height: 335
+
+                maximumSegmentLimit: memory.memorySize
+                model: memory.segmentTableModel
+
+
+
+                onAddProcessClicked: {
+                    model.color = processColor
+                    if(memory.addProcess(allocationMethods.algorithm))
+                    {
+                        processColor = Qt.rgba(Math.random(), Math.random(), Math.random(), 1);
+                        processSegments.model.clear();
+                        processSegments.model.lastPid = memory.lastPid
+                    }
+                    else
+                    {
+                        warningPopup.message = qsTr("Can't add this process try to remove some processes first")
+                        warningPopup.open();
+                    }
+                }
+            }
+        }
+
+        SegmentTable {
+            id: segmentTable
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+            currentPid: memoryView.currentPid
+
+//            visible: memoryView.currentPid === 0 ? false : true
+            model:  memory.memoryModel
+        }
     }
 }
 
 /*##^##
 Designer {
-    D{i:11;anchors_width:600;anchors_x:157}
+    D{i:11;anchors_width:600;anchors_x:157}D{i:12;anchors_width:600;anchors_x:157}
 }
 ##^##*/
