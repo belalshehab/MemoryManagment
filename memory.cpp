@@ -250,8 +250,29 @@ bool Memory::addHole(quint32 limit, quint32 base)
 }
 
 void Memory::memoryShuffle()
-{
-    //replace this with your implementation
+{    
+    m_memorySegments.erase(std::remove_if(m_memorySegments.begin(), m_memorySegments.end(), [](const Segment &segment){
+        return segment.m_isHole;
+    }), m_memorySegments.end());
+
+    for(int i = 0; i < m_memorySegments.count(); ++i)
+    {
+        if(i == 0)
+        {
+            m_memorySegments[i].m_base = 1;
+        }
+        else
+        {
+            m_memorySegments[i].m_base = m_memorySegments[i -1].m_base + m_memorySegments[i -1].m_limit;
+        }
+    }
+    uint32_t end = m_memorySegments.back().m_base + m_memorySegments.back().m_limit;
+
+    if (end < m_memorySize)
+    {
+        m_memorySegments.push_back(Segment(0, 0, m_memorySize - end +1, end, true));
+    }
+    m_memoryModel.update();
 }
 
 
