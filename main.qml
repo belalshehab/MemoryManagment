@@ -48,6 +48,8 @@ ApplicationWindow {
 
     RowLayout {
         id: rowLayout
+        anchors.rightMargin: 20
+        anchors.leftMargin: 20
         anchors.left: memoryView.left
         anchors.right: memoryView.right
         anchors.bottom: parent.bottom

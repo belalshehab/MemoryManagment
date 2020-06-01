@@ -45,7 +45,7 @@ GrayRectangle
         anchors.left: parent.left
         anchors.topMargin: 10
         anchors.margins: 20
-        
+
         clip: true
         spacing: 20
 
@@ -86,7 +86,7 @@ GrayRectangle
             base: model.base
             name: model.isHole ? "" : model.name
             color: model.isHole ? "#09ffffff" : model.color
-            heightScale: memory.memorySize /600
+            heightScale: memory.memorySize /550
             deleteButtonVisble: segmentPid === 0 ? false :
                                     listView.currentItem.segmentPid === segmentPid ? listView.currentItem.showDelete : false
             onDeleteClicked:

@@ -11,7 +11,7 @@ Item {
     property int segmentPid
     property int limit
     property int base
-    property int heightScale
+    property real heightScale
     property alias name: segmentNameLabel.text
     property alias color: rec.color
 
