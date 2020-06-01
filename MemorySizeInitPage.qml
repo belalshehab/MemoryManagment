@@ -40,20 +40,23 @@ GrayRectangle {
 
     ColumnLayout {
         id: columnLayout
-        width: 170
-        height: 130
+        anchors.right: parent.right
+        anchors.rightMargin: 20
+        anchors.left: parent.left
+        anchors.leftMargin: 20
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 20
         anchors.top: deepLine.bottom
         anchors.topMargin: 20
-        anchors.horizontalCenter: parent.horizontalCenter
 
         TitledSpinBox {
             id: titledSpinBox
             text: "Memory Size"
-            Layout.preferredWidth: 130
+            Layout.preferredWidth: 160
             Layout.preferredHeight: 65
-            Layout.minimumHeight: 55
-            Layout.minimumWidth: 100
-            Layout.fillWidth: true
+            Layout.minimumHeight: 65
+            Layout.minimumWidth: 120
+            Layout.fillWidth: false
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
             to: 10000000
@@ -62,7 +65,7 @@ GrayRectangle {
         Button {
             id: nextButton
             text: qsTr("Next")
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+            Layout.alignment: Qt.AlignRight | Qt.AlignBottom
 
             onClicked: nextClicked()
         }
@@ -71,3 +74,9 @@ GrayRectangle {
 
 
 }
+
+/*##^##
+Designer {
+    D{i:3;anchors_height:130;anchors_width:170}
+}
+##^##*/

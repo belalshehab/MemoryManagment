@@ -11,6 +11,7 @@ Item {
     property int segmentPid
     property int limit
     property int base
+    property int heightScale
     property alias name: segmentNameLabel.text
     property alias color: rec.color
 
@@ -19,7 +20,7 @@ Item {
     signal segmentClicked
     signal deleteClicked
 
-    height: limit > 400 ? limit /10 : 40
+    height: (limit / heightScale) < 40 ? 40 : limit / heightScale
 
     Rectangle{
         id: rec

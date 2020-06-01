@@ -9,7 +9,7 @@ ApplicationWindow {
     id: applicationWindow
     visible: true
     width: 1200
-    height: 750
+    height: 900
 
     color: "#333333"
     title: "Memory managment"
@@ -162,7 +162,7 @@ ApplicationWindow {
 
             currentPid: memoryView.currentPid
 
-            visible: memoryView.currentPid === 0 ? false : true
+//            visible: memoryView.currentPid === 0 ? false : true
             model:  memory.memoryModel
         }
     }

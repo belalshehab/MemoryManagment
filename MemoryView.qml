@@ -86,7 +86,7 @@ GrayRectangle
             base: model.base
             name: model.isHole ? "" : model.name
             color: model.isHole ? "#09ffffff" : model.color
-
+            heightScale: memory.memorySize /600
             deleteButtonVisble: segmentPid === 0 ? false :
                                     listView.currentItem.segmentPid === segmentPid ? listView.currentItem.showDelete : false
             onDeleteClicked:
