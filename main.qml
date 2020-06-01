@@ -145,7 +145,7 @@ ApplicationWindow {
                     }
                     else
                     {
-                        warningPopup.message = qsTr("Can't add this process try to remove some processes first")
+                        warningPopup.message = qsTr("Can't add this process try to remove some processes first\nOr you can shuffle the memory")
                         warningPopup.open();
                     }
                 }

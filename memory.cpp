@@ -268,7 +268,7 @@ void Memory::memoryShuffle()
     }
     uint32_t end = m_memorySegments.back().m_base + m_memorySegments.back().m_limit;
 
-    if (end < m_memorySize)
+    if (end <= m_memorySize)
     {
         m_memorySegments.push_back(Segment(0, 0, m_memorySize - end +1, end, true));
     }
