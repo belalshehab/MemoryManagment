@@ -77,6 +77,7 @@ ApplicationWindow {
 
     ColumnLayout {
         id: columnLayout
+        spacing: 10
         anchors.right: memoryView.left
         anchors.rightMargin: 30
         anchors.left: allocationMethods.left
@@ -86,8 +87,12 @@ ApplicationWindow {
 
         SwipeView {
             id: swipeView
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+            Layout.maximumHeight: 400
+            Layout.minimumHeight: 350
+            Layout.preferredHeight: 350
+            Layout.maximumWidth: 650
+            Layout.minimumWidth: 500
+            Layout.preferredWidth: 600
 
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
@@ -128,7 +133,6 @@ ApplicationWindow {
                 model: memory.segmentTableModel
 
 
-
                 onAddProcessClicked: {
                     model.color = processColor
                     if(memory.addProcess(allocationMethods.algorithm))
@@ -148,13 +152,17 @@ ApplicationWindow {
 
         SegmentTable {
             id: segmentTable
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+            Layout.maximumHeight: 400
+            Layout.minimumHeight: 350
+            Layout.preferredHeight: 350
+            Layout.maximumWidth: 650
+            Layout.minimumWidth: 500
+            Layout.preferredWidth: 600
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
             currentPid: memoryView.currentPid
 
-//            visible: memoryView.currentPid === 0 ? false : true
+            //            visible: memoryView.currentPid === 0 ? false : true
             model:  memory.memoryModel
         }
     }
