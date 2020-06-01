@@ -101,9 +101,10 @@ GrayRectangle {
         x: 271
         y: 176
         text: qsTr("Finished")
+        anchors.right: parent.right
+        anchors.rightMargin: 20
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 20
-        anchors.horizontalCenter: parent.horizontalCenter
         display: AbstractButton.TextOnly
 
         onClicked: finishedClicked()

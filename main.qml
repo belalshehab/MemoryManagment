@@ -9,7 +9,7 @@ ApplicationWindow {
     id: applicationWindow
     visible: true
     width: 1200
-    height: 1000
+    height: 750
 
     color: "#333333"
     title: "Memory managment"
@@ -88,13 +88,13 @@ ApplicationWindow {
         SwipeView {
             id: swipeView
             Layout.maximumHeight: 400
-            Layout.minimumHeight: 350
+            Layout.minimumHeight: 300
             Layout.preferredHeight: 350
             Layout.maximumWidth: 650
             Layout.minimumWidth: 500
             Layout.preferredWidth: 600
 
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 
 
             interactive: false
@@ -152,17 +152,17 @@ ApplicationWindow {
 
         SegmentTable {
             id: segmentTable
-            Layout.maximumHeight: 400
-            Layout.minimumHeight: 350
-            Layout.preferredHeight: 350
+            Layout.maximumHeight: 300
+            Layout.minimumHeight: 200
+            Layout.preferredHeight: 250
             Layout.maximumWidth: 650
             Layout.minimumWidth: 500
             Layout.preferredWidth: 600
-            Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
 
             currentPid: memoryView.currentPid
 
-            //            visible: memoryView.currentPid === 0 ? false : true
+            visible: memoryView.currentPid === 0 ? false : true
             model:  memory.memoryModel
         }
     }
